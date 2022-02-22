@@ -1,38 +1,43 @@
+
 import { useEffect, useState } from 'react'
 import './ItemListContainer.css'
-import ItemCount from "../ItemCount/ItemCount"
+import ItemList from '../ItemList/ItemList'
 import { getProducts } from '../../asyncmock'
 
-const ItemListContainer = ({greeting = 'Hello'})=> {
+
+
+
+const ItemListContainer = ()=> {
     const [products, setProducts] = useState([])
 
     
     useEffect(() => {
-        getProducts().then(products => {
-            console.log(products)
-            setProducts(products)
+        getProducts().then(item => {
+            setProducts(item)
+        }).catch(err  => {
+            console.log(err)
         })
+
+        return (() => {
+            setProducts()
+        })          
     }, [])
     
-    const handleOnAdd = (quantity) => {
-        console.log(`Se agregaron ${quantity} productos`)
-    }
-
-    console.log(products)
-
     return (
         <div className="ItemListContainer">
-            <h1>{greeting}</h1>
-            <ItemCount stock={10} initial={2} onAdd={handleOnAdd}/>
-            <ul>
-                {products.map(product => {
-                    return <li key={product.id}>{product.name}</li>
-                })}
-                
-            </ul>
+            <ItemList products={products}/>
         </div>
     )    
     
 }
 
 export default ItemListContainer
+                           
+                    
+                 
+                    
+                    
+                            
+                
+
+

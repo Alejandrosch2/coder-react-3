@@ -1,37 +1,42 @@
 import './NavBar2.css'
-import Button from '../Button/Button'
 import CartWidget from '../CartWidget/CartWidget'
+import { NavLink } from 'react-router-dom'
 
 
-const NavBar2 = ({ title }) => { //{ title: 'ecommerce ', color='red'}
-  // const { title, color } = props 
-  const handleEstrategia = () => {
-    console.log('Estrategia')
-  }
+const NavBar2 = () => { 
 
-  const handleHorror = () => {
-    console.log('Horror')
-  }
-
-  const handleAccion = () => {
-    console.log('Accion')
-  }
 
   return (
       <nav className="NavBar" >
         <div>
-            <h3>{title}</h3>
+            <h3>Tienda Online</h3>
         </div>
         <div className="Categories">
-          <Button handleClick={handleEstrategia}>
+           <NavLink
+            to={'/category/estrategia'}
+            className={({ isActive }) =>
+              isActive ? 'ActiveOption' : 'Option'
+            }
+          >
             Estrategia
-          </Button>
-          <Button handleClick={handleHorror} backgroundColor='black' colorText='crimson' >
+          </NavLink>
+            
+          <NavLink
+            to={'/category/horror'}
+            className={({ isActive }) =>
+              isActive ? 'ActiveOption' : 'Option'
+            }
+          >
             Horror
-          </Button>
-          <Button handleClick={handleAccion}>
+          </NavLink>
+          <NavLink
+            to={'/category/accion'}
+            className={({ isActive }) =>
+              isActive ? 'ActiveOption' : 'Option'
+            }
+          >
             Accion
-          </Button>
+          </NavLink>
         </div>
         <CartWidget/>
       </nav>
