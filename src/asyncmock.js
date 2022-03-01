@@ -4,12 +4,21 @@ const products = [
     { id: 3, name: 'DarkWood', price: '$120', category: 'Horror', img:'https://i.ibb.co/bzS5cDR/Darkwood-image1600w.jpg', stock: 5, description:'indie'}
 ]
 
-export const getProducts = () => {
-    return new Promise((resolve) => {
+
+const categories = [
+
+    { id:'estrategia', description: 'Estrategia'},
+    { id:'accion', description:'Accion'},
+    { id:'horror', description:'Horror'}
+]
+
+export const getProducts = (idCategory) => {
+    return new Promise ((resolve) => {
+        const productsToResolve = idCategory ? products.filter(item => item.category === idCategory) : products
         setTimeout(() => {
-            resolve(products)
-        }, 1000)
-    })
+            resolve(productsToResolve);
+        },2000);
+    });
 }
 
 export const getProduct = (id) => {
@@ -17,6 +26,13 @@ export const getProduct = (id) => {
         const prod = products.find(p => p.id === parseInt(id))
         setTimeout(() => {
             resolve(prod)
+        }, 1000)
+    })
+}
+export const getCategories = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(categories)
         }, 1000)
     })
 }
