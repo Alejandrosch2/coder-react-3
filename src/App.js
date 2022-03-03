@@ -6,30 +6,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
 
-
-  const handleSubmit = (e) => {
-
-     e.preventDefault()
-     console.log('submit')
-
-  }
-
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar2/>
+        <NavBar2 />
         <Routes>
-          <Route path='/' element={<ItemListContainer/>}/>
-         
+          <Route path='/' element={<ItemListContainer />}/>
           <Route path='/about' element={<h1>About</h1>} />
           <Route path='/category/:categoryId' element={<ItemListContainer />}/>
           <Route path='/detail/:productId' element={<ItemDetailContainer />}/>
         </Routes>
       </BrowserRouter>
-      <form onSubmit={handleSubmit}>
-        
-        <button type="submit">ir al carrito</button>
-      </form>
     </div>
   );
 }
