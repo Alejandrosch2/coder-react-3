@@ -7,9 +7,9 @@ const products = [
 
 const categories = [
 
-    { id:'estrategia', description: 'Estrategia'},
-    { id:'accion', description:'Accion'},
-    { id:'horror', description:'Horror'}
+    { id:'Estrategia', description: 'Estrategia'},
+    { id:'Accion', description:'Accion'},
+    { id:'Horror', description:'Horror'}
 ]
 
 export const getProducts = (idCategory) => {

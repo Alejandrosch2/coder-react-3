@@ -1,42 +1,17 @@
 import './ItemDetail.css'
 import { useState } from 'react'
-
-
-
-
-const ButtonCount = ({ onConfirm, stock, initial = 0 }) => {
-    const [count, setCount] = useState(initial)
-
-    const increment = () => {
-        if(count < stock) {
-            setCount(count + 1)
-        }
-    }
-
-    const decrement = () => {
-        if(count > initial) {
-            setCount(count - 1)
-        }
-    }
-
-    return (
-        <div>
-            <p>{count}</p>
-            <button onClick={decrement}>-</button>
-            <button onClick={increment}>+</button>
-            <button onClick={() => onConfirm(count)}>Agregar al carrito</button>
-        </div>
-    )
-}
-
-
-
-const onConfirm = () => {
-    console.log('agregue al carrito')
-}
+import ItemCount from '../ItemCount/ItemCount'
+import { Link } from 'react-router-dom'
 
 
 const ItemDetail = ({ product }) => {
+
+    const [ cantidad, setCantidad] = useState(0)
+
+    const onAdd = (stock) =>{
+         setCantidad(stock)
+    }
+
     return (
         <article className="CardItem">
             <header className="Header">
@@ -59,8 +34,15 @@ const ItemDetail = ({ product }) => {
                 </p>
             </section>           
             <footer className='ItemFooter'>
+                {   cantidad === 0 ? (
 
-                <ButtonCount onConfirm={onConfirm} stock={product?.stock}  inicial={0}  />
+                    <ItemCount  stock={product?.stock}   onAdd={onAdd}  />
+                ): (
+                    <>
+                        <Link to="/cart" style={{margin: "5px"}} >ir al carrito</Link>
+                    </>
+                )}
+                
                 
             </footer>
             
