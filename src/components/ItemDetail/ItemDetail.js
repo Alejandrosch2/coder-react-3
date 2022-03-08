@@ -1,15 +1,18 @@
 import './ItemDetail.css'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ItemCount from '../ItemCount/ItemCount'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../../Context/CartContext'
 
 
 const ItemDetail = ({ product }) => {
 
-    const [ cantidad, setCantidad] = useState(0)
+    const [ quantity, setQuantity] = useState(0)
+    const {addToCart} = useContext(CartContext)
 
-    const onAdd = (stock) =>{
-         setCantidad(stock)
+    const onAdd = (cantidad) =>{
+         setQuantity(cantidad);
+         addToCart(product, cantidad);
     }
 
     return (
@@ -34,7 +37,7 @@ const ItemDetail = ({ product }) => {
                 </p>
             </section>           
             <footer className='ItemFooter'>
-                {   cantidad === 0 ? (
+                {   quantity === 0 ? (
 
                     <ItemCount  stock={product?.stock}   onAdd={onAdd}  />
                 ): (

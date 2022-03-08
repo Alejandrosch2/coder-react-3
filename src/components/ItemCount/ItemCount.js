@@ -1,29 +1,35 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 
-   const ItemCount = ({ onAdd, stock, initial = 0 }) => {
-    const [count, setCount] = useState(initial)
 
-    const increment = () => {
-        if(count < stock) {
-            setCount(count + 1)
-        }
-    }
+const ItemCount = ({ stock, onAdd }) => {
+    const [number, setNumber] = useState(0);
 
-    const decrement = () => {
-        if(count > initial) {
-            setCount(count - 1)
-        }
-    }
+    const add = () => {
+        number < stock && setNumber(number + 1);
+    };
+
+    const substract = () => {
+        number > 0 && setNumber(number - 1);
+    };
 
     return (
-        <div>
-            <p>{count}</p>
-            <button onClick={decrement}>-</button>
-            <button onClick={increment}>+</button>
-            <button onClick={(e) => onAdd(count)}>Agregar al carrito</button>
+        <div className="container-buton">
+            <div className="container-add-substract">
+                <button onClick={add}>+</button>
+                <p>{number}</p>
+                <button onClick={substract}>-</button>
+            </div>
+            <div>
+                <button
+                    disabled={number === 0}
+                    className={number === 0 ? 'disabled' : 'add'}
+                    onClick={() => onAdd(number)}
+                >
+                    Agregar al carrito
+                </button>
+            </div>
         </div>
-    )
-}
-
+    );
+};
 
 export default ItemCount
