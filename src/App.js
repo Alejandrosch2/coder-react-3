@@ -5,11 +5,12 @@ import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailCont
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartContextProvider } from './Context/CartContext';
 import Cart from './components/Cart/Cart';
+import { NotificationServicesProvider } from './services/NotificationServices/NotificationServices';
 
 const App = () => {
 
   return (
-    
+      <NotificationServicesProvider>   
       <CartContextProvider>
       <BrowserRouter>
         <NavBar2 />
@@ -22,7 +23,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       </CartContextProvider>
-    
+      </NotificationServicesProvider>
   );
 }
 
