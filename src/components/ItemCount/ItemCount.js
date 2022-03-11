@@ -11,14 +11,16 @@ const ItemCount = ({ stock, onAdd }) => {
     const substract = () => {
         number > 0 && setNumber(number - 1);
     };
-
+    
     return (
         <div className="container-buton">
-            <div className="container-add-substract">
-                <button onClick={add}>+</button>
-                <p>{number}</p>
-                <button onClick={substract}>-</button>
-            </div>
+            <table>
+                <tr className="container-add-substract">
+                    <td align="left" ><button  onClick={substract}>-</button></td>
+                    <td align="center"><p>{number}</p></td>
+                    <td align="right"><button onClick={add}>+</button></td>
+                </tr>
+            </table>
             <div>
                 <button
                     disabled={number === 0}
