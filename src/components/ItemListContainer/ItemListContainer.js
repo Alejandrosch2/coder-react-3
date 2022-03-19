@@ -26,7 +26,7 @@ const ItemListContainer = () => {
                     console.log(doc)
                     return { id: doc.id, ...doc.data() }
                })
-               console.log(products)
+               
                setProducts(products)
             }).finally(() => {
                 setLoading(false) 
