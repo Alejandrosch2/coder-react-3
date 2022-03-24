@@ -20,7 +20,7 @@ const Notification = ({ message, severity }) => {
     const config = true ?
     {
         style: notificationStyles,
-        className: severity === 'success' ? 'Error' : 'Success'
+        className: severity === 'success' ? 'Success' : 'Error'
     } : {}
 
     if(message === '') {

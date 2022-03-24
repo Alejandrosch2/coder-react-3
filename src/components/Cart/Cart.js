@@ -44,26 +44,38 @@ const Cart = () => {
                     } else {
                         outOfStock.push({ id: response.id, ...response.data()})    
                     }
-                })
+                }).catch((error)=> {
+                    console.log(error)
+                }).then(() => {
+                    exexuteOrder()
+                } ) 
             })
 
-            if(outOfStock.length === 0) {
-                addDoc(collection(firestoreDb, 'orders'), objOrder).then(({id}) => {
-                    batch.commit().then(() => {
-                        clearCart()
-                        setNotification('error', `La orden se genero exitosamente, su numero de orden es: ${id}`)
+
+            const exexuteOrder = () => {
+
+                if(outOfStock.length === 0) {
+                    addDoc(collection(firestoreDb, 'orders'), objOrder).then(({id}) => {
+                        batch.commit().then(() => {
+                            clearCart()
+                            setNotification('success', `La orden se genero exitosamente, su numero de orden es: ${id}`)
+                        })
+                    }).catch(error => {
+                        setNotification('success', error)
+                    }).finally(() => {
+                        setProcessingOrder(false)
                     })
-                }).catch(error => {
-                    setNotification('error', error)
-                }).finally(() => {
-                    setProcessingOrder(false)
-                })
-            } else {
-                outOfStock.forEach(prod => {
-                    setNotification('error', `El producto ${prod.name} no tiene stock disponible`)
-                    removeItem(prod.id)
-                })          
-            }
+                } else {
+                    outOfStock.forEach(prod => {
+                        setNotification('error', `El producto ${prod.name} no tiene stock disponible`)
+                        removeItem(prod.id)
+                    })          
+                }
+
+
+            } 
+
+            
         } else {
             setNotification('error', 'Debe completar los datos de contacto para generar la orden')
         }
@@ -83,9 +95,9 @@ const Cart = () => {
     }
 
     return ( 
-        <div>
+        <div className='Background'>
             <h1>Cart</h1>
-            { products.map(p => <CartItem key={p.id} {...p}/>) }
+            { products.map(p => <CartItem key={p.id} {...p} />) }
             <h3>Total: ${getTotal()}</h3>
             <button onClick={() => clearCart()} className="Button">Cancelar compra</button>
             <button onClick={() => confirmOrder()} className="Button">Confirmar Compra</button>
