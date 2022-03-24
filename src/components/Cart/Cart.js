@@ -4,7 +4,7 @@ import Togglable from '../Togglable/Togglable'
 import ContactForm from '../ContactForm/ContactForm'
 import { CartContext } from '../../Context/CartContext'
 import CartItem from '../CartItems/CartItems'
-import { writeBatch, getDoc, doc, addDoc, collection, Timestamp } from 'firebase/firestore'
+import { writeBatch, getDocs, addDoc, collection, Timestamp, where, query, documentId } from 'firebase/firestore'
 import { firestoreDb } from '../../services/firebase/firebase'
 import { useNotificationServices } from '../../services/NotificationServices/NotificationServices'
 
@@ -13,8 +13,8 @@ const Cart = () => {
     const [contact, setContact] = useState({
         name: '',
         phone: '',
-        address: '',
-        comment: ''
+        email: ''
+        
     })
     const { products, clearCart, getTotal, removeItem } = useContext(CartContext)
     const contactFormRef = useRef()
@@ -35,49 +35,38 @@ const Cart = () => {
             const batch = writeBatch(firestoreDb)
             const outOfStock = []
 
-            objOrder.items.forEach(prod => {
-                getDoc(doc(firestoreDb, 'products', prod.id)).then(response => {
-                    if(response.data().stock >= prod.quantity) {
-                        batch.update(doc(firestoreDb, 'products', response.id), {
-                            stock: response.data().stock - prod.quantity
-                        })
-                    } else {
-                        outOfStock.push({ id: response.id, ...response.data()})    
-                    }
-                }).catch((error)=> {
-                    console.log(error)
+            const ids = objOrder.items.map(i => i.id)
+
+            getDocs(query(collection(firestoreDb, 'products'),where(documentId(), 'in', ids)))
+                .then(response => {
+                    response.docs.forEach((docSnapshot) => {
+                        if(docSnapshot.data().stock >= objOrder.items.find(prod => prod.id === docSnapshot.id).quantity) {
+                            batch.update(docSnapshot.ref, { stock: docSnapshot.data().stock - objOrder.items.find(prod => prod.id === docSnapshot.id).quantity})
+                        } else {
+                            outOfStock.push({id: docSnapshot.id, ...docSnapshot.data()})
+                        }
+                    })
                 }).then(() => {
-                    exexuteOrder()
-                } ) 
-            })
-
-
-            const exexuteOrder = () => {
-
-                if(outOfStock.length === 0) {
-                    addDoc(collection(firestoreDb, 'orders'), objOrder).then(({id}) => {
-                        batch.commit().then(() => {
+                    if(outOfStock.length === 0) {
+                        addDoc(collection(firestoreDb, 'orders'), objOrder).then(({id}) => { 
+                            batch.commit()
                             clearCart()
                             setNotification('success', `La orden se genero exitosamente, su numero de orden es: ${id}`)
                         })
-                    }).catch(error => {
-                        setNotification('success', error)
-                    }).finally(() => {
-                        setProcessingOrder(false)
-                    })
-                } else {
-                    outOfStock.forEach(prod => {
-                        setNotification('error', `El producto ${prod.name} no tiene stock disponible`)
-                        removeItem(prod.id)
-                    })          
-                }
+                    } else {
+                        outOfStock.forEach(prod => {
+                            setNotification('error', `El producto ${prod.name} no tiene stock disponible`)
+                            removeItem(prod.id)
+                        })    
+                    }               
+                }).catch((error) => {
+                    setNotification('error', error)
+                }).finally(() => {
+                    setProcessingOrder(false)
+                })
 
-
-            } 
-
-            
         } else {
-            setNotification('error', 'Debe completar los datos de contacto para generar la orden')
+             setNotification('error', 'Debe completar los datos de contacto para generar la orden')
         }
     }
 

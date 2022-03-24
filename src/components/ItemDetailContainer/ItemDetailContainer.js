@@ -1,26 +1,25 @@
 import './ItemDetailContainer.css'
 import { useState, useEffect } from 'react'
 import ItemDetail from '../ItemDetail/ItemDetail'
-import { getProduct } from '../../asyncmock'
 import { useParams } from 'react-router-dom'
-import { getDoc, doc } from 'firebase/firestore'
-import { firestoreDb } from  '../../services/firebase/firebase'
+import { getProductById } from  '../../services/firebase/firebase'
+import { useNotificationServices } from '../../services/NotificationServices/NotificationServices'
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState()
     const { productId } = useParams()
     const [loading, setLoading] = useState(true)
+
+    const setNotification = useNotificationServices()
     
 
     useEffect(() => {
         setLoading(true)
         
-        const docRef = doc(firestoreDb, 'products', productId)
-
-        getDoc(docRef).then(Response => {
-
-            const product = {id: Response.id, ...Response.data()}
-            setProduct(product)
+        getProductById(productId).then(Response => {
+            setProduct(Response)
+        }).catch((error) => {
+            setNotification('error',`Error buscando producto:  ${error} ` )
         }).finally(() => {
             setLoading(false)
         })
@@ -34,7 +33,14 @@ const ItemDetailContainer = () => {
 
     return (
         <div className="ItemDetailContainer" >
-            <ItemDetail {...product}/>
+            {
+                loading ?
+                        <h1>cargando...</h1> :
+                        product ?
+                 <ItemDetail {...product}/>:
+                 <h1>el producto no existe</h1>
+            }
+           
         </div>
     )    
 }

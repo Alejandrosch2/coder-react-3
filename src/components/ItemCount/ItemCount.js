@@ -15,12 +15,15 @@ const ItemCount = ({ stock, onAdd }) => {
     return (
         <div className="container-buton">
             <table className="container-add-substract">
+                <tbody>
                 <tr>
                 <td><button onClick={ substract}>-</button></td>
                <td><p>{number}</p></td>
                 <td><button onClick={add}>+</button></td>
                 </tr>
+                </tbody>
             </table>
+            
             <div>
                 <button
                     disabled={number === 0}

@@ -1,37 +1,28 @@
 import { useEffect, useState } from 'react'
 import './ItemListContainer.css'
 import ItemList from '../ItemList/ItemList'
-import { getProducts } from '../../asyncmock'
 import { useParams } from 'react-router-dom'
-import { getDocs, collection, query, where } from 'firebase/firestore'
-import { firestoreDb } from '../../services/firebase/firebase'
+import { getProducts } from '../../services/firebase/firebase'
+import { useNotificationServices } from '../../services/NotificationServices/NotificationServices'
 
 const ItemListContainer = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const { categoryId } = useParams()
 
+    const setNotification = useNotificationServices()
+
 
           useEffect(() => {
             setLoading(true)
 
-            const collectionRef = categoryId ?
-                    query(collection(firestoreDb, 'products'), where('category', '==', categoryId )) :
-                    collection(firestoreDb, 'products')
-              
-    
-            getDocs(collectionRef).then(QuerySnapshot => {
-
-               const products = QuerySnapshot.docs.map(doc => {
-                    console.log(doc)
-                    return { id: doc.id, ...doc.data() }
-               })
-               
-               setProducts(products)
+           getProducts(categoryId).then(Response => {
+                setProducts(Response)
+            }).catch((error) => {
+                setNotification('error', `Error buscando productos: ${error}`)
             }).finally(() => {
-                setLoading(false) 
+                setLoading(false)
             })
-
             return (() => {
                 setProducts()
             })          
