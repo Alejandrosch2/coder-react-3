@@ -9,7 +9,8 @@ const categories = [
 
     { id:'Estrategia', description: 'Estrategia'},
     { id:'Accion', description:'Accion'},
-    { id:'Horror', description:'Horror'}
+    { id:'Horror', description:'Horror'},
+    { id:'FPS', description:'FPS'}
 ]
 
 export const getProducts = (idCategory) => {

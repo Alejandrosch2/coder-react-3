@@ -19,7 +19,7 @@ const Togglable = React.forwardRef((props, ref) => {
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button className='Button' style={{backgroundColor: '#219c0b'}} onClick={toggleVisibility}>{props.buttonLabelShow}</button>
+        <button className='Button' style={{backgroundColor: '#06229e'}} onClick={toggleVisibility}>{props.buttonLabelShow}</button>
       </div>
       <div style={showWhenVisible}>
          <button className='Button' style={{backgroundColor: '#db4025'}} onClick={toggleVisibility}>{props.buttonLabelHide ? props.buttonLabelHide : 'Cancel'}</button>
