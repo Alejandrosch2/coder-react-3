@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './ItemCount.css'
 
 const ItemCount = ({ stock, onAdd }) => {
     const [number, setNumber] = useState(0);
@@ -24,7 +24,7 @@ const ItemCount = ({ stock, onAdd }) => {
                 </tbody>
             </table>
             
-            <div>
+            <div className='Button1'>
                 <button
                     disabled={number === 0}
                     className={number === 0 ? 'disabled' : 'add'}

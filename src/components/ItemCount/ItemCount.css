@@ -1,16 +1,13 @@
-.myButton {
-    /* color: #8C30F5; */
-    text-decoration: none;
-    border-radius: 25;
-    margin: 0 50px;
-    /* TODO */
+.add{
+
     width: auto;
-    padding: 12px;
-    font-size: 8px;
-    /* background: #8C30F5; */
+    margin: 5px;
+    padding-top: 12px;
+    font-size: 10px;
+    background: #78c906;
     border-radius: 8px;
-    flex: none;
-    display: flex;
+    flex: auto;
+    flex-wrap: wrap;
     order: 1;
     align-self: center;
     flex-grow: 0;
@@ -22,4 +19,4 @@
     border-style: none;
     cursor: pointer;
     outline: inherit;
-  }
+}

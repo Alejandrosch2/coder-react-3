@@ -6,26 +6,10 @@
     border: 1px solid #e1e1e1;
     border-radius: 10px;
     background-color: rgb(25, 23, 133);
+    
+    justify-content: center;
+    
 }
-/* 
-width: 150px;
-padding: 30px;
-margin: 30px;
-font-size: 10px;
-border: 1px solid #e1e1e1;
-border-radius: 10px; */
-
-
-
-/* 
-width: fit-content;
-padding: 30px;
-margin: 30px;
-font-size: 10px;
-background-color: rgb(25, 23, 133);
-border: 1px solid #e1e1e1;
-border-radius: 10px;
-flex-direction: column  */
 
 .Header {
     display: flex;
@@ -67,11 +51,12 @@ flex-direction: column  */
 }
 
 .ItemImg {
-   
+    justify-content: center;
     object-fit: cover;
     object-position: center;
-    height: fit-content;
-    width: fit-content;
+    
+    
+
 }
 
 .ItemFooter {

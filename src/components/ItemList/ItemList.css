@@ -1,3 +1,7 @@
 .ListGroup {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row 4;
+    margin: 25px;
+    padding: 25px;
 }

@@ -68,3 +68,73 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## EMPEZAR
+para iniciar la aplicacion tenemos que ir a la consola y escribir npm start, la aplicacion funciona de la siguiente manera:
+
+# Productos:
+
+Los productos los tenemos guardados en una base de datos, llamada firebase, desde la base de datos, le damos el nombre al producto, el stock, la categoria, el precio, una imagen y una breve descripcion del producto.
+
+
+# Components
+
+En esta carpeta se encuentran la mayoria de las funciones que permiten correr la app, aca estan las carpetas mas importantes:
+- Navbar
+- Items
+- ItemList
+- ItemListContainer
+- ItemDetail
+- ItemDeatailContainer
+- Cart
+- CartItems
+- FireBase
+
+
+## NavBar
+en el navbar tenemos las diferentes categorias que ofrece la pagina, estas categorias las conseguimos exportando una funcion del archivo asyncmock, tambien importamos el link que nos brinda react en el titulo de nuestra pagina para volver a la pagina principal, utilizamos el navlink en las categorias para que el usuario sepa en que categoria se encuentra.
+
+## Items
+En esta seccion tenemos la presentacion "la card" de nuestros productos, la estructura de como se va a presentar el producto para el usuario, con un link en el footer que nos lleva a la descripcion del producto
+
+## ItemList
+
+mediante un mapeo de items a cada producto le damos su propio "card" usando cada id particular del producto para no repetir el producto o que falte alguno,que usamos en items para luego mostrar cada "card" en itemlistContainer. aclaracion, el id, precio, nombre, etc de los productos los buscamos en el firebase,
+
+## ItemListContainer
+
+Aca buscamos a los productos en el fire base usando la funcion getProducts (funcion exportada en la carpeta firebase), buscamos los datos mediante promesas,
+es una tarea asincronica, esperando a que nos llegue los datos del firebase el usuario se le deja un mensaje de cargando para hacerle saber que algo esta pasando en la pagina, si hay algun tipo de error o no se encontraron productos nos va a tirar error, caso contrario nos muestra los productos
+
+## ItemDetail
+ Cuando hacemos click en la descripcion del producto, nos encontramos con otra estructura o "card" de presentacion del producto, en donde tenemos mayor informacion del producto, cuanto stock tiene, una descripcion del producto y la opcion de agregarlo al carrito(la cantidad que querramos siempre y cuando no se exceda de la cantidad de stock disponible). importamos funciones de cartContext para sumar al carrito el producto y corroborar si es el mismo producto que estamos agregando. Usa como parametros el id del producto, su nombre, imagen, precio, categoria, stock y descripcion
+ 
+ ## ItemDetailContainer
+ Lo mismo que con itemListContainer, buscamos los productos en la base de datos
+ usando la funcion getProductsById, tambien es una promesa, nos muestra solo el producto que seleccionamos.
+ 
+ ## Cart
+ En el carrito encontramos los productos que agregamos, la estructura de como se muestra se encuentra en CartItems, aca en el carrito se le pide al usuario que complete un par de datos para poder realizar la compra, le damos la opcion al usuario de remover o seguir agregando productos al carrito, cada accion que hace el usuario se le informa (cada producto que borra del carrito o que agrega).
+ Cuando el usuario finaliza la compra, se le notificara si la compra fue exitosa con un mensaje mostrando su numero de orden, de lo contrario le tira que hubo un error en su compra. Utiliza las siguiente funciones del CartContext (products, clearCart, getTotal, removeItem)
+ 
+ ## CartItems
+ Estructura de como se muestran los productos que agregamos en el Carrito, donde tenemos la funcion de eliminar el producto del carrito
+ 
+ ## fireBase
+ 
+Nuestra base de datos en donde tenemos guardados nuestros productos, aca cuando se confirma una compra se genera un orden de compra teniendo los datos que se le pide el usuario antes de realizar una compra para tener control de quien compra y que productos se vendieron.
+
+# App
+
+Aca es donde exportamos la mayoria de los componentes,
+con las siguientes rutas: 
+- pagina principal "/" aca tenemos todos los productos que tenemos en ItemListContainer
+- categorias "/category/categoryId" filtramos los porductos de ItemListContainer con la categoria que deseamos
+- detail "/detaial/productId" al clickear en un producto para que nos muestre mas detalles, nos lleva a esta pagina
+- Cart "/Cart" cuando agregamos un producto al carrito nos da la opcion de ir al carrito o al tocar el icono del carrito nos lleva a esta pagina
+
+
+
+[proyectofinalReact.gif](proyectofinalReact.gif)
+
+

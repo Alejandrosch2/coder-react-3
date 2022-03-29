@@ -10,13 +10,13 @@ import { NotificationServicesProvider } from './services/NotificationServices/No
 const App = () => {
 
   return (
+      <div className='background'>
       <NotificationServicesProvider>   
       <CartContextProvider>
       <BrowserRouter>
         <NavBar2 />
         <Routes>
           <Route path='/' element={<ItemListContainer />}/>
-          <Route path='/about' element={<h1>About</h1>} />
           <Route path='/category/:categoryId' element={<ItemListContainer />}/>
           <Route path='/detail/:productId' element={<ItemDetailContainer />}/>
           <Route path="/cart" element={<Cart />} />
@@ -24,6 +24,7 @@ const App = () => {
       </BrowserRouter>
       </CartContextProvider>
       </NotificationServicesProvider>
+      </div>
   );
 }
 

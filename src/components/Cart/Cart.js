@@ -7,6 +7,7 @@ import CartItem from '../CartItems/CartItems'
 import { writeBatch, getDocs, addDoc, collection, Timestamp, where, query, documentId } from 'firebase/firestore'
 import { firestoreDb } from '../../services/firebase/firebase'
 import { useNotificationServices } from '../../services/NotificationServices/NotificationServices'
+import  Contact from '../Contact/Contact'
 
 const Cart = () => {
     const [processingOrder, setProcessingOrder] = useState(false)
@@ -50,8 +51,9 @@ const Cart = () => {
                     if(outOfStock.length === 0) {
                         addDoc(collection(firestoreDb, 'orders'), objOrder).then(({id}) => { 
                             batch.commit()
-                            clearCart()
-                            setNotification('success', `La orden se genero exitosamente, su numero de orden es: ${id}`)
+                            clearCart();
+                            setNotification('success', `La orden se genero exitosamente, su numero de orden es: ${id}`);
+                            
                         })
                     } else {
                         outOfStock.forEach(prod => {
@@ -79,6 +81,7 @@ const Cart = () => {
             <div>
                 <h1>Cart</h1>
                 <h2>No hay productos en el carrito</h2>
+                <Contact/>
             </div>
         )
     }
